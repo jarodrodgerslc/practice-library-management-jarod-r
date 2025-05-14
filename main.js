@@ -1,66 +1,110 @@
-//Step 1
-class LibraryItem {
+/*
+Scenario:
+You are tasked with designing a library management system. The library
+lends out various types of items such as books, DVDs, and magazines. While
+all items share some common properties (e.g., title, id, isAvailable), each
+type has unique properties and behaviors. For example:
 
-    constructor(title, id, isAvailable = true){
+● Books have an author and a genre.
+● DVDs have a director and duration.
+● Magazines have an issueNumber and publisher.
 
+Tasks
+1. Step 1: Create a Base Class
+○ Define a class LibraryItem to represent shared properties
+(title, id, isAvailable) and methods (e.g., checkOut() and
+returnItem()).
+
+2. Step 2: Extend the Base Class
+○ Create child classes Book, DVD, and Magazine that inherit from
+LibraryItem.
+○ Add unique properties and methods for each child class:
+■ Book: Add properties like author and genre.
+■ DVD: Add properties like director and duration.
+■ Magazine: Add properties like issueNumber and publisher.
+
+3. Step 3: Instantiate Objects
+○ Create instances of each class and test the shared and unique
+methods.
+
+4. Step 4: Test the Inheritance
+○ Use inherited methods like checkOut() and returnItem() to
+manage the availability of items.
+○ Test accessing and displaying unique properties of each child
+class.
+  */
+
+class LibraryItems {
+
+    constructor(title, id){
         this.title = title;
         this.id = id;
-        this.isAvailable = isAvailable;
-    }
-    checkout(){
-        this.isAvailable = false;
-    }
-    returnItem(){
         this.isAvailable = true;
     }
-//Step 2
+
+    checkout(){
+        if (this.isAvailable){
+            this.isAvailable = false;
+            console.log(`${this.title} has been checked out.`)
+        }
+        else if (!this.isAvailable){
+            console.log(`${this.title} has already been checked out.`)
+        }
+    }
+
+    returnItem(){
+        if (!this.isAvailable){
+            this.isAvailable = true;
+            console.log(`${this.title} has been checked in.`)
+        }
+        else if (this.isAvailable){
+            console.log(`${this.title} is already in the library`)
+    
 }
-class Book extends LibraryItem {
-    constructor(title, id, author, genre, isAvailable){
-        super(title, id, isAvailable);
+}
+}
+
+class Book extends LibraryItems{
+
+    constructor(title, id, author, genre, numberOfPages){
+        super(title, id)
         this.author = author;
         this.genre = genre;
+        this.numberOfPages = numberOfPages;
+    }
+
+    displayBookInfo(){
+        console.log(`${this.title} is a ${genre} book written by ${this.author} and has ${this.numberOfPages} of pages.`);
     }
 }
-class DVD extends LibraryItem {
-    constructor(title, id, director, duration, isAvailable){
-        super(title, id, isAvailable);
-        this.director = director;
-        this.duration = duration;
-    }
-}
-class Magazine extends LibraryItem {
-    
-    constructor(title, id, issueNumber, publisher, isAvailable){
-        super(title, id, isAvailable);
+
+class Magazine extends LibraryItems{
+
+    constructor(title, id, issueNumber, publisher){
+        super(title, id)
         this.issueNumber = issueNumber;
         this.publisher = publisher;
+
     }
+    displayMagazineInfo(){
+        console.log(`${this.title} is issue number ${this.issueNumber} and is published by ${this.publisher}.`);
 }
-//step 3
+}
+class DVD extends LibraryItems{
 
-const book1 = new Book('You', 517, 'Caroline Kepnes', 'Thriller');
-console.log(book1);
+    constructor(title, id, duration, director){
+        super(title, id)
+        this.duration = duration;
+        this.director = director;
+    }
+    displayDvdInfo(){
+        console.log(`${this.title} is directed by ${this.director} and is ${this.duration} minutes.`);
+}
+}
 
-const dvd1 = new DVD('Sinners', 213123, 'Ryan Coogler', 'Horror');
-console.log(dvd1);
+const You = new Book('You', 2313, 'Stephanie Kepnes', 'Thriller', 422);
+const GameInformer = new Magazine('GameInformer', 123123, 23, 'GameStop');
+const Norbit = new DVD('Norbit', 213, 140, 'Eddie Murphy');
 
-const magazine1 = new Magazine('Game Informer', 2737, 2024, 'GameStop');
-console.log(magazine1); 
-
-//step 4
-book1.checkout()
-dvd1.checkout()
-magazine1.checkout()
-
-console.log(book1);
-console.log(dvd1);
-console.log(magazine1);
-
-book1.returnItem();
-
-console.log(book1);
-
-console.log(dvd1.duration);
-console.log(magazine1.issueNumber);
-console.log(book1.author);
+You.checkout()
+Norbit.returnItem()
